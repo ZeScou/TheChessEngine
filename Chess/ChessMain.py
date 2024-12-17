@@ -7,18 +7,9 @@ MAX_FPS = 15
 IMAGES = {}
 
 def load_images():
-    IMAGES['wp'] = p.transform.scale(p.image.load("images/wp.png"), (SQUARE_SIZE, SQUARE_SIZE)),
-    IMAGES['bp'] = p.transform.scale(p.image.load("images/bp.png"), (SQUARE_SIZE, SQUARE_SIZE)),
-    IMAGES['wR'] = p.transform.scale(p.image.load("images/wR.png"), (SQUARE_SIZE, SQUARE_SIZE)),
-    IMAGES['bR'] = p.transform.scale(p.image.load("images/bR.png"), (SQUARE_SIZE, SQUARE_SIZE)),
-    IMAGES['wB'] = p.transform.scale(p.image.load("images/wB.png"), (SQUARE_SIZE, SQUARE_SIZE)),
-    IMAGES['bB'] = p.transform.scale(p.image.load("images/bB.png"), (SQUARE_SIZE, SQUARE_SIZE)),
-    IMAGES['wN'] = p.transform.scale(p.image.load("images/wN.png"), (SQUARE_SIZE, SQUARE_SIZE)),
-    IMAGES['bN'] = p.transform.scale(p.image.load("images/bN.png"), (SQUARE_SIZE, SQUARE_SIZE)),
-    IMAGES['wK'] = p.transform.scale(p.image.load("images/wK.png"), (SQUARE_SIZE, SQUARE_SIZE)),
-    IMAGES['bK'] = p.transform.scale(p.image.load("images/bK.png"), (SQUARE_SIZE, SQUARE_SIZE)),
-    IMAGES['wQ'] = p.transform.scale(p.image.load("images/wQ.png"), (SQUARE_SIZE, SQUARE_SIZE)),
-    IMAGES['bQ'] = p.transform.scale(p.image.load("images/bQ.png"), (SQUARE_SIZE, SQUARE_SIZE))
+    pieces = ['wp', 'wR', 'wN', 'wB', 'wQ', 'wK', 'bp', 'bR', 'bN', 'bB', 'bQ', 'bK']
+    for piece in pieces:
+        IMAGES[piece] = p.transform.scale(p.image.load(f"images/{piece}.png"), (SQUARE_SIZE, SQUARE_SIZE))
 
 def main():
     p.init()
@@ -49,7 +40,12 @@ def drawBoard(screen):
 
 
 def drawPieces(screen, board):
-    pass
+    for row in range(DIMENSION):
+        for col in range(DIMENSION):
+            piece = board[row][col]
+            if piece != "--":
+                screen.blit(IMAGES[piece],p.Rect(col*SQUARE_SIZE,row*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE))
+
 
 if __name__ == "__main__":
     main()
