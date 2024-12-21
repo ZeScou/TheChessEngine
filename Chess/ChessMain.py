@@ -1,10 +1,14 @@
 import pygame as p
-from Chess import ChessEngine
+import ChessEngine
 WIDTH = HEIGHT = 400
 DIMENSION = 8 #for the 8x8 chessboard
 SQUARE_SIZE = WIDTH // DIMENSION
 MAX_FPS = 15
 IMAGES = {}
+
+
+PIPI = 3
+
 
 def load_images():
     pieces = ['wp', 'wR', 'wN', 'wB', 'wQ', 'wK', 'bp', 'bR', 'bN', 'bB', 'bQ', 'bK']
