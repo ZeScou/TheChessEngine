@@ -6,10 +6,6 @@ SQUARE_SIZE = WIDTH // DIMENSION
 MAX_FPS = 15
 IMAGES = {}
 
-
-PIPI = 3
-
-
 def load_images():
     pieces = ['wp', 'wR', 'wN', 'wB', 'wQ', 'wK', 'bp', 'bR', 'bN', 'bB', 'bQ', 'bK']
     for piece in pieces:
@@ -23,10 +19,29 @@ def main():
     gs = ChessEngine.GameState()
     load_images()
     running = True
+    square_selected = () #no square selected when the program starts : (row,col)
+    playerClicks = [] #[(row,col),(row,col)
     while running:
         for e in p.event.get():
             if e.type == p.QUIT:
                 running = False
+            elif e.type == p.MOUSEBUTTONDOWN:
+                mousePos = p.mouse.get_pos() #position of the mouse
+                col = mousePos[0]//SQUARE_SIZE
+                row = mousePos[1]//SQUARE_SIZE
+                if (square_selected == (row,col)): #the player already clicked this square (undo the selection)
+                    square_selected =()
+                    playerClicks = []
+                else:
+                    square_selected = (row,col)
+                    playerClicks.append(square_selected) #add first and second click into playerClicks [(1strow,1stCol),(2ndRow,2ndCol)]
+                if(len(playerClicks) == 2): #after the second click
+                    move = ChessEngine.Move(playerClicks[0], playerClicks[1], gs.board) #display move
+                    print(move.getChessNotation())
+                    gs.MakeMove(move) #make the move
+                    square_selected = () #reset clicks
+                    playerClicks = []
+
         drawGameState(screen, gs)
         clock.tick(MAX_FPS)
         p.display.flip()
