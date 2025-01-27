@@ -38,7 +38,7 @@ def main():
                 if(len(playerClicks) == 2): #after the second click
                     move = ChessEngine.Move(playerClicks[0], playerClicks[1], gs.board) #display move
                     print(move.getChessNotation())
-                    gs.MakeMove(move) #make the move
+                    gs.make_move(move) #make the move
                     square_selected = () #reset clicks
                     playerClicks = []
 

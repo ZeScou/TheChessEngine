@@ -13,11 +13,16 @@ class GameState:
         self.whiteToMove = True
         self.moveLog = []
 
-    def MakeMove(self,move):
+    def make_move(self,move):
         self.board[move.startRow][move.startCol] = "--" #on remet à nulle la position que vient de quitter la pièce
         self.board[move.endRow][move.endCol] = move.pieceMoved #et on inscrit la pièce sur sa position d'arrivée
         self.moveLog.append(move) #pour afficher l'historique des moves
         self.whiteToMove = not self.whiteToMove
+
+    def undo_Move(self):
+        if(len(self.moveLog) != 0):
+            move = self.moveLog.pop()
+
 
 
 class Move:
