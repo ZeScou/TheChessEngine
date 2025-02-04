@@ -17,6 +17,8 @@ def main():
     clock = p.time.Clock()
     screen.fill(p.Color("white"))
     gs = ChessEngine.GameState()
+    validMoves = gs.getValidMoves()
+    moveMade = False
     load_images()
     running = True
     square_selected = () #no square selected when the program starts : (row,col)
@@ -38,9 +40,19 @@ def main():
                 if(len(playerClicks) == 2): #after the second click
                     move = ChessEngine.Move(playerClicks[0], playerClicks[1], gs.board) #display move
                     print(move.getChessNotation())
-                    gs.make_move(move) #make the move
+                    if move in validMoves:
+                        gs.make_move(move) #make the move
+                        moveMade = True
                     square_selected = () #reset clicks
                     playerClicks = []
+            elif e.type == p.KEYDOWN:
+                if e.key == p.K_ESCAPE: #si on appuie sur escape
+                    gs.undo_Move()
+                    validMoves = gs.getValidMoves()
+
+        if(moveMade): #permet de redéfinir tous les coups légaux dès qu'un coup a été joué
+            validMoves = gs.getValidMoves()
+            moveMade = False
 
         drawGameState(screen, gs)
         clock.tick(MAX_FPS)
